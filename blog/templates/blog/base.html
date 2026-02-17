@@ -11,6 +11,21 @@
     <nav class="navbar navbar-dark bg-dark mb-4">
         <div class="container">
             <a class="navbar-brand" href="{% url 'home' %}">Django Blog</a>
+
+            <div class="ms-auto">
+                {% if user.is_authenticated %}
+                    <span class="text-white me-3">Olá, {{ user.username }}</span>
+                    
+                    <a href="{% url 'admin:index' %}" class="btn btn-sm btn-outline-light me-2" target="_blank">Gerenciar Blog</a>
+                    
+                    <form action="{% url 'logout' %}" method="post" class="d-inline">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-sm btn-danger">Sair</button>
+                    </form>
+                {% else %}
+                    <a href="{% url 'login' %}" class="btn btn-sm btn-light">Entrar</a>
+                {% endif %}
+            </div>
         </div>
     </nav>
 
