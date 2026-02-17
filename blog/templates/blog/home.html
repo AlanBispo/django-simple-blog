@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Meu Blog Django</title>
+</head>
+<body>
+    <h1>Bem-vindo ao meu Blog</h1>
+    <hr>
+
+    {% for post in posts %}
+        <article>
+            <h2>{{ post.titulo }}</h2>
+            <small>Postado por {{ post.autor }} em {{ post.criado_em }}</small>
+            <p>{{ post.conteudo|truncatechars:100 }}</p>
+            <a href="#">Ler mais</a>
+        </article>
+        <hr>
+    {% empty %}
+        <p>Ainda não existem postagens.</p>
+    {% endfor %}
+</body>
+</html>
