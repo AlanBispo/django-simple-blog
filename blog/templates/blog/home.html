@@ -1,29 +1,56 @@
-{% extends 'blog/base.html' %}
-
-{% block title %}Início | Meu Blog{% endblock %}
+{% extends "blog/base.html" %}
 
 {% block content %}
-    <div class="row">
-        <div class="col-md-8 offset-md-2">
-            <h1 class="mb-4">Últimas Postagens</h1>
-            
+<div class="row">
+    <div class="col-md-3 mb-4">
+        <div class="card shadow-sm p-3">
+            <h5>Buscar</h5>
+            <input type="text" id="campo-busca" class="form-control mb-3" placeholder="Digite o título..." value="{{ busca }}">
+
+            <h5>Categorias</h5>
+            <div class="list-group">
+                <a href="{% url 'home' %}" class="list-group-item list-group-item-action {% if not request.GET.categoria %}active{% endif %}">Todas</a>
+                {% for cat in categorias %}
+                    <a href="?categoria={{ cat.slug }}" class="list-group-item list-group-item-action {% if request.GET.categoria == cat.slug %}active{% endif %}">
+                        {{ cat.nome }}
+                    </a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-9">
+        <div id="lista-posts" class="row">
             {% for post in posts %}
-                <div class="card mb-4 shadow-sm">
-                    <div class="card-body">
-                        <h2 class="card-title">{{ post.titulo }}</h2>
-                        <h6 class="card-subtitle mb-2 text-muted small">
-                            Por {{ post.autor }} • {{ post.criado_em|date:"d/m/Y" }}
-                            {% if post.categoria %}
-                                • <span class="badge bg-secondary">{{ post.categoria.nome }}</span>
-                            {% endif %}
-                        </h6>
-                        <p class="card-text">{{ post.conteudo|truncatechars:150 }}</p>
-                        <a href="{% url 'post_detail' post.slug %}" class="btn btn-outline-primary btn-sm">Continuar lendo →</a>
+                <div class="col-md-6 mb-4 post-item">
+                    <div class="card shadow-sm h-100">
+                        <div class="card-body">
+                            <h3 class="h5 card-title">{{ post.titulo }}</h3>
+                            <p class="card-text text-secondary small">{{ post.conteudo|truncatechars:80 }}</p>
+                            <a href="{% url 'post_detail' post.slug %}" class="btn btn-sm btn-primary">Ler mais</a>
+                        </div>
                     </div>
                 </div>
             {% empty %}
-                <div class="alert alert-info">Nenhum post encontrado.</div>
+                <p class="text-center">Nenhum post encontrado.</p>
             {% endfor %}
         </div>
     </div>
+</div>
+
+<script>
+    document.getElementById('campo-busca').addEventListener('input', function(e) {
+        let termo = e.target.value.toLowerCase();
+        let posts = document.querySelectorAll('.post-item');
+        
+        posts.forEach(post => {
+            let titulo = post.querySelector('.card-title').innerText.toLowerCase();
+            if (titulo.includes(termo)) {
+                post.style.display = 'block';
+            } else {
+                post.style.display = 'none';
+            }
+        });
+    });
+</script>
 {% endblock %}
