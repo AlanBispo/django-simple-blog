@@ -15,7 +15,7 @@
                             Por <strong>{{ post.autor }}</strong> em {{ post.criado_em|date:"d/m/Y" }}
                         </p>
                         <p class="card-text">{{ post.conteudo|truncatechars:150 }}</p>
-                        <a href="#" class="btn btn-primary btn-sm">Ler post completo</a>
+                        <a href="{% url 'post_detail' post.slug %}" class="btn btn-outline-primary btn-sm">Continuar lendo →</a>
                     </div>
                 </div>
             {% empty %}
