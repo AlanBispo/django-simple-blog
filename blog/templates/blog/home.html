@@ -1,23 +1,26 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <title>Meu Blog Django</title>
-</head>
-<body>
-    <h1>Bem-vindo ao meu Blog</h1>
-    <hr>
+{% extends 'blog/base.html' %}
 
-    {% for post in posts %}
-        <article>
-            <h2>{{ post.titulo }}</h2>
-            <small>Postado por {{ post.autor }} em {{ post.criado_em }}</small>
-            <p>{{ post.conteudo|truncatechars:100 }}</p>
-            <a href="#">Ler mais</a>
-        </article>
-        <hr>
-    {% empty %}
-        <p>Ainda não existem postagens.</p>
-    {% endfor %}
-</body>
-</html>
+{% block title %}Início | Meu Blog{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <h1 class="mb-4">Últimas Postagens</h1>
+            
+            {% for post in posts %}
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-body">
+                        <h2 class="card-title">{{ post.titulo }}</h2>
+                        <p class="text-muted small">
+                            Por <strong>{{ post.autor }}</strong> em {{ post.criado_em|date:"d/m/Y" }}
+                        </p>
+                        <p class="card-text">{{ post.conteudo|truncatechars:150 }}</p>
+                        <a href="#" class="btn btn-primary btn-sm">Ler post completo</a>
+                    </div>
+                </div>
+            {% empty %}
+                <div class="alert alert-info">Nenhum post encontrado.</div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
