@@ -11,9 +11,12 @@
                 <div class="card mb-4 shadow-sm">
                     <div class="card-body">
                         <h2 class="card-title">{{ post.titulo }}</h2>
-                        <p class="text-muted small">
-                            Por <strong>{{ post.autor }}</strong> em {{ post.criado_em|date:"d/m/Y" }}
-                        </p>
+                        <h6 class="card-subtitle mb-2 text-muted small">
+                            Por {{ post.autor }} • {{ post.criado_em|date:"d/m/Y" }}
+                            {% if post.categoria %}
+                                • <span class="badge bg-secondary">{{ post.categoria.nome }}</span>
+                            {% endif %}
+                        </h6>
                         <p class="card-text">{{ post.conteudo|truncatechars:150 }}</p>
                         <a href="{% url 'post_detail' post.slug %}" class="btn btn-outline-primary btn-sm">Continuar lendo →</a>
                     </div>

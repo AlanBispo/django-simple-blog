@@ -9,6 +9,9 @@
             <h1 class="display-4 fw-bold">{{ post.titulo }}</h1>
             <p class="text-muted">
                 Publicado em {{ post.criado_em|date:"d/m/Y" }} por <strong>{{ post.autor }}</strong>
+                {% if post.categoria %}
+                    em <span class="badge bg-primary">{{ post.categoria.nome }}</span>
+                {% endif %}
             </p>
             <hr>
             <div class="mt-4 lh-lg" style="white-space: pre-line;">
