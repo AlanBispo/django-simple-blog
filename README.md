@@ -47,8 +47,7 @@ O projeto conta com área administrativa para gestão de conteúdo, sistema de a
 
   `python manage.py migrate`
 
-6. Crie um Superusuário (Admin)
-OBS: Para acessar o painel e criar posts, você precisa de um usuário administrador
+6. Crie um Superusuário (Admin) - Para acessar o painel e criar posts, você precisa de um usuário administrador
 
   `python manage.py createsuperuser`
 
